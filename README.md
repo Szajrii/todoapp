@@ -4,34 +4,16 @@ You can use the [editor on GitHub](https://github.com/Szajrii/todoapp/edit/maste
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Todoapp
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Aplikacja umożliwiająca tworzenie listy rzeczy do zrobienia. Użytkownik ma możliwość stworzenia konta, które zostanie połączone z bazą cloud firestore i tam będą przechowywane jego zadania. Użytkownik ma możliwość edycji i usuwania swoich zadań. Użytkownicy mają również możliwość tworzenia grupowych list, w których będą mogli dodawać zadania wraz z innymi użytkownikami korzystającymi z aplikacji.
 
-```markdown
-Syntax highlighted code block
+Aplikacja wykorzystuje HTML 5, CSS 3, Vue js
 
-# Header 1
-## Header 2
-### Header 3
+Aplikacja dostępna pod adresem:
 
-- Bulleted
-- List
+https://storage.googleapis.com/mszarek/todoapp/index.html
 
-1. Numbered
-2. List
+https://szajrii.github.io/todoapp/
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Szajrii/todoapp/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
