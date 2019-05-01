@@ -14,7 +14,7 @@ Aplikacja dostępna pod adresem:
 
 https://storage.googleapis.com/mszarek/todoapp/index.html
 
-https://szajrii.github.io/todoapp/.
+
 
 
 
