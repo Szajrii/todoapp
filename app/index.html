@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>todoapp</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.0/spectre.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.0/spectre-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <style type="text/css">
+    
+    </style>
+    <meta charset="UTF-8">
+</head>
+<body>
+	<div id="app" v-cloak>
+
+    <div class="my-header text-light">
+      <div class="container my-header-columns" >
+        <div class="columns my-header-columns" >
+          <div class="column col-7 my-header-columns" >
+            <a href="https://github.com/Szajrii/todoapp" style="font-size: 45px; line-height: 85px; color: white;">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+          <div class="column col-5 my-header-columns" >
+            <div class="my-header-columns form-style" style="justify-content: flex-end;">
+
+              <div style="position: relative; width: 30%">
+                <div class="vertical-center">
+                  <div>Liczba aktywnych zadań: {{toDoList.length}} </div>
+                  <div>Liczba zadań nieaktywnych: {{archivesList.length}} </div>
+                </div>
+              </div>
+              <!-- <div style="position: relative; width: 25%">
+                <div class="vertical-center">Dostępne grupy: {{numberOfAvailableGroups}}</div>
+              </div>
+              <div style="position: relative; width: 25%">
+                <div class="vertical-center">
+                  <div >{{user}} </div>
+                  <div >Lvl: {{lvl}}</div>
+                </div>
+              </div> -->
+              <div style="margin-right: 10%" >
+                <figure class="avatar avatar-xl vertical-center" @mouseover="modal ='block'"  @mouseleave="modal='none'"style="background-color: white">
+                  <img  src="https://design.printexpress.co.uk/wp-content/uploads/2016/02/01-avatars.jpg" alt="..." style="z-index: -1">
+                    <div class="modal2" :style="{'display': modal}">
+                      <div class="logout vertical-center "><i class="fas fa-power-off pointer" @click="logOut"></i></div>
+                    </div>
+                  </img>
+                </figure>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+		<div class="table-div" style="margin-top: 5%;">
+			<header class="navbar">
+				  <section class="navbar-section">
+					    <a class="mr-2 btn btn-link" :class="{'navbar-brand' : view == 'tdo-table'}" @click = "setTdoView">Do zrobienia</a>
+					    <a class="btn btn-link" :class="{'navbar-brand' : view2 == 'tdo-table'}" @click="setArchivesView">Archiwum</a>
+					    <a class="btn btn-link " :class="{'navbar-brand' : view2 == 'group-list'}" @click="setGroupView">Grupy(Wkrótce)</a>
+				  </section>
+
+				  <section class="navbar-section">
+				    <div class="input-group input-inline">
+				      	<input class="form-input" type="text" placeholder="search" v-model="search">
+				      	<!-- <button class="btn btn-primary input-group-btn">Search</button> -->
+				    </div>
+				  </section>
+			</header>
+			<template v-if="view2 == 'tdo-table'">
+				<div class="div-border"></div>
+				<header class="navbar">
+					<section class="navbar-section">
+						
+						    <a class="mr-2 btn btn-link" :class="{'navbar-brand' : secondaryView2 == 'all'}" @click = "secondaryView2 = 'all'; search = '';">Wszystkie</a>
+						    <a class="btn btn-link" :class="{'navbar-brand' : secondaryView2 == 'done'}" @click="secondaryView2 = 'done'; search = '';">Wykonane</a>
+						    <a class="btn btn-link" :class="{'navbar-brand' : secondaryView2 == 'undone'}" @click="secondaryView2 = 'undone'; search = '';">Niewykonane</a>
+						
+					</section>
+				</header>
+			</template>
+			<component :is="view" :todolist="toDoList" :sort="secondaryView2" :search="search" :changePageSignal="changePageSignal" :groupList="groupList" :groupTasks="groupTasks"
+      :availablegroups="numberOfAvailableGroups" :user="user">
+					
+			</component>
+			<component :is="view2" :todolist="archivesList" :sort="secondaryView2" :search="search" :changePageSignal="changePageSignal">
+					
+			</component>
+			<component :is="secondaryView" :secondaryView="secondaryView" :activeDetails = "activeDetails" :condition="view">
+				
+			</component>
+
+      <component :is="secondaryView3" :groupName="groupNameToAddTask" :viewCondition="viewCondition" :secondaryview="secondaryView3">
+
+      </component>
+
+		</div>
+		<div class="form-style table-div">
+			<div v-if="view == 'tdo-table'">
+				<button class="add-button pointer" @click="addTaskView"><i class="fas fa-plus text-primary"><span class="text-primary">Dodaj zadanie</span></i></button>
+			</div>
+			<div style="color: #5755d9">
+				<span class="pointer" id="previous" @click="changePage($event)" ><i class="fas fa-arrow-left"></i></span>
+				<span >{{pagesView.currentPage + 1}}/{{pagesView.numberOfPages}} </span>
+				<span class="pointer" id="next" @click="changePage($event)" ><i class="fas fa-arrow-right"></i></span>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+<script type="text/javascript" src="components/eventbus.js"></script>
+<script type="text/javascript" src="components/grouplist.js"></script>
+<script type="text/javascript" src="components/taskdetails.js"></script>
+<script type="text/javascript" src="components/addtask.js"></script>
+<script type="text/javascript" src="components/tdotable.js"></script>
+<script type="text/javascript" src="components/tdodata.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+	
+	 
+
+	
+
+</body>
+</html>
